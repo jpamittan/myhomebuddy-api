@@ -11,18 +11,22 @@
 |
 */
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    ActivateController,
     DashboardController,
     LoginController,
     TermsController
 };
+use Illuminate\Support\Facades\Route;
 
+Route::prefix('terms')->group(function () {
+    Route::get('/consumers', [TermsController::class, 'consumers'])->name('terms.consumers');
+    Route::get('/sellers', [TermsController::class, 'sellers'])->name('terms.sellers');
+});
+Route::prefix('activate')->group(function () {
+    Route::get('/consumer/{user}/{hash}', [ActivateController::class, 'consumer'])->name('activate.consumer');
+});
 Route::middleware(['guest'])->group(function () {
-    Route::prefix('terms')->group(function () {
-        Route::get('/consumers', [TermsController::class, 'consumers'])->name('terms.consumers');
-        Route::get('/sellers', [TermsController::class, 'sellers'])->name('terms.sellers');
-    });
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'auth'])->name('auth');
 });
