@@ -36,7 +36,9 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [DashboardController::class, 'users'])->name('dashboard.users');
         Route::get('/consumers', [DashboardController::class, 'consumers'])->name('dashboard.consumers');
+        Route::get('/consumer/{user}', [DashboardController::class, 'consumer'])->name('dashboard.consumer.view');
         Route::get('/sellers', [DashboardController::class, 'sellers'])->name('dashboard.sellers');
+        Route::get('/seller/{user}', [DashboardController::class, 'seller'])->name('dashboard.seller.view');
     });
     Route::prefix('terms')->group(function () {
         Route::get('/', [TermsController::class, 'index'])->name('terms.index');

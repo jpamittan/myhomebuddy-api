@@ -34,6 +34,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function consumer(User $user): View
+    {
+        return view('dashboard.consumer-detail', [
+            'user' => $user
+        ]);
+    }
+
     public function sellers(): View
     {
         $users = User::where('type', 'Seller')
@@ -42,6 +49,13 @@ class DashboardController extends Controller
 
         return view('dashboard.sellers', [
             'users' => $users
+        ]);
+    }
+
+    public function seller(User $user): View
+    {
+        return view('dashboard.seller-detail', [
+            'user' => $user
         ]);
     }
 }

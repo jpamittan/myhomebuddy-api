@@ -43,7 +43,7 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <a href="#" class="text-decoration-none ml-1 mr-1" title="View">
+                                    <a href="{{ route('dashboard.seller.view', ['user' => $user->id]) }}" class="text-decoration-none ml-1 mr-1" title="View">
                                         <i class="far fa-eye"></i>
                                     </a>
                                 </td>
