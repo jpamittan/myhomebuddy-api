@@ -33,8 +33,11 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/consumers', [DashboardController::class, 'consumers'])->name('dashboard.consumers');
-    Route::get('/sellers', [DashboardController::class, 'sellers'])->name('dashboard.sellers');
+    Route::prefix('users')->group(function () {
+        Route::get('/', [DashboardController::class, 'users'])->name('dashboard.users');
+        Route::get('/consumers', [DashboardController::class, 'consumers'])->name('dashboard.consumers');
+        Route::get('/sellers', [DashboardController::class, 'sellers'])->name('dashboard.sellers');
+    });
     Route::prefix('terms')->group(function () {
         Route::get('/', [TermsController::class, 'index'])->name('terms.index');
         Route::post('/update/{term}', [TermsController::class, 'update'])->name('terms.update');

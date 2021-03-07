@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -17,17 +18,30 @@ class DashboardController extends Controller
         return view('dashboard.user-index');
     }
 
+    public function users(): View
+    {
+        return view('dashboard.user-list');
+    }
+
     public function consumers(): View
     {
-        return view('dashboard.consumers', [
+        $users = User::where('type', 'Consumer')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(20);
 
+        return view('dashboard.consumers', [
+            'users' => $users
         ]);
     }
 
     public function sellers(): View
     {
-        return view('dashboard.sellers', [
+        $users = User::where('type', 'Seller')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(20);
 
+        return view('dashboard.sellers', [
+            'users' => $users
         ]);
     }
 }

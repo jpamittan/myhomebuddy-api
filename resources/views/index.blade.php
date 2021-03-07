@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <a href="{{ route('dashboard.consumers') }}" class="text-decoration-none">
+                <a href="{{ route('dashboard.users') }}" class="text-decoration-none">
                     <div class="alert alert-primary mt-5" role="alert">
                         <h4 class="alert-heading">
                             <i class="fas fa-user"></i> Users

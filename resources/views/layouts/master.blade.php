@@ -24,7 +24,7 @@
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                   @if (Auth::user()->type == "Admin")
                     <li class="nav-item">
-                      <a class="nav-link" href=" {{ route('dashboard.consumers') }}">
+                      <a class="nav-link" href=" {{ route('dashboard.users') }}">
                         <i class="fas fa-user"></i> Users
                       </a>
                     </li>
