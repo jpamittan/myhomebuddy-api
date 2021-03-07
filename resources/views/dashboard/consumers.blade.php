@@ -30,7 +30,7 @@
                     @if (count($users))
                         @foreach($users as $user)
                             <tr>
-                                <th scope="row">{{ $user->id }}</th>
+                                <td scope="row">{{ $user->id }}</td>
                                 <td>{{ $user->first_name }}</td>
                                 <td>{{ $user->middle_name }}</td>
                                 <td>{{ $user->last_name }}</td>

@@ -11,6 +11,7 @@ class ActivateAccount extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $type;
     public $firstName;
     public $userId;
     public $hash;
@@ -20,8 +21,14 @@ class ActivateAccount extends Mailable
      *
      * @return void
      */
-    public function __construct(string $firstName, string $userId, string $hash)
+    public function __construct(
+        string $type, 
+        string $firstName, 
+        string $userId, 
+        string $hash
+    )
     {
+        $this->type = $type;
         $this->firstName = $firstName;
         $this->userId = $userId;
         $this->hash = $hash;
@@ -34,7 +41,12 @@ class ActivateAccount extends Mailable
      */
     public function build(): ActivateAccount
     {
+        $view = 'emails.activateConsumerAccount';
+        if ($this->type == "Seller") {
+            $view = 'emails.activateSellerAccount';
+        }
+
         return $this->subject('Activate account')
-            ->view('emails.activateAccount');
+            ->view($view);
     }
 }

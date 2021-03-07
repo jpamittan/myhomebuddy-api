@@ -27,27 +27,27 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">ID</th>
+                        <td scope="row">ID</td>
                         <td>{{ $user->id }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">First Name</th>
+                        <td scope="row">First Name</td>
                         <td>{{ $user->first_name }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Middle Name</th>
+                        <td scope="row">Middle Name</td>
                         <td>{{ $user->middle_name }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Last Name</th>
+                        <td scope="row">Last Name</td>
                         <td>{{ $user->last_name }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Email</th>
+                        <td scope="row">Email</td>
                         <td>{{ $user->email }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Status</th>
+                        <td scope="row">Status</td>
                         <td>
                             @if ($user->is_activated)
                                 <span class="badge rounded-pill bg-success">Activated</span>
@@ -61,13 +61,13 @@
                             @if (is_array($value))
                                 @foreach($value as $k => $v)
                                     <tr>
-                                        <th scope="row">{{ ucfirst($key) }} {{ $k }}</th>
+                                        <td scope="row">{{ ucfirst($key) }} {{ $k }}</td>
                                         <td>{{ $v }}</td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
-                                    <th scope="row">{{ str_replace('_', ' ', ucfirst($key)) }}</th>
+                                    <td scope="row">{{ str_replace('_', ' ', ucfirst($key)) }}</td>
                                     <td>{{ $value }}</td>
                                 </tr>
                             @endif

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('api')->group(function () {
     Route::prefix('register')->group(function () {
-        Route::post('/consumer', [RegistrationAPIController::class, 'consumer'])->name('terms.consumers');
+        Route::post('/consumer', [RegistrationAPIController::class, 'consumer'])->name('registration.consumer');
+        Route::post('/seller', [RegistrationAPIController::class, 'seller'])->name('registration.seller');
     });
 });

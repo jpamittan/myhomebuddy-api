@@ -40,6 +40,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/sellers', [DashboardController::class, 'sellers'])->name('dashboard.sellers');
         Route::get('/seller/{user}', [DashboardController::class, 'seller'])->name('dashboard.seller.view');
     });
+    Route::prefix('activate')->group(function () {
+        Route::get('/seller/{user}', [ActivateController::class, 'seller'])->name('activate.seller');
+    });
     Route::prefix('terms')->group(function () {
         Route::get('/', [TermsController::class, 'index'])->name('terms.index');
         Route::post('/update/{term}', [TermsController::class, 'update'])->name('terms.update');

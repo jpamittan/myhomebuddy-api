@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @push('css')
-    
+
 @endpush
 
 @section('content')
@@ -27,28 +27,28 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">ID</th>
-                        <td>{{ $user->id }}</td>
+                        <td scope="row">ID</td>
+                        <td scope="row">{{ $user->id }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">First Name</th>
-                        <td>{{ $user->first_name }}</td>
+                        <td scope="row">First Name</td>
+                        <td scope="row">{{ $user->first_name }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Middle Name</th>
-                        <td>{{ $user->middle_name }}</td>
+                        <td scope="row">Middle Name</td>
+                        <td scope="row">{{ $user->middle_name }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Last Name</th>
-                        <td>{{ $user->last_name }}</td>
+                        <td scope="row">Last Name</td>
+                        <td scope="row">{{ $user->last_name }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Email</th>
-                        <td>{{ $user->email }}</td>
+                        <td scope="row">Email</td>
+                        <td scope="row">{{ $user->email }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Status</th>
-                        <td>
+                        <td scope="row">Status</td>
+                        <td scope="row">
                             @if ($user->is_activated)
                                 <span class="badge rounded-pill bg-success">Activated</span>
                             @else
@@ -60,25 +60,61 @@
                         @foreach(json_decode($user->properties, true) as $key => $value)
                             @if (is_array($value))
                                 @foreach($value as $k => $v)
-                                    <tr>
-                                        <th scope="row">{{ ucfirst($key) }} {{ $k }}</th>
-                                        <td>{{ $v }}</td>
-                                    </tr>
+                                    @if ($k == "images")
+                                        @foreach($v as $imageKey => $imageValue)
+                                            <tr>
+                                                <td scope="row">{{ ucfirst($key) }} {{ str_replace('_', ' ', ucfirst($imageKey)) }}</td>
+                                                <td scope="row" class="p-3">
+                                                    <a href="{{ $imageValue }}">
+                                                        <img src="{{ $imageValue }}" style="width: 20%;"/>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td scope="row">{{ ucfirst($key) }} {{ $k }}</td>
+                                            <td scope="row">{{ $v }}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             @else
                                 <tr>
-                                    <th scope="row">{{ str_replace('_', ' ', ucfirst($key)) }}</th>
-                                    <td>{{ $value }}</td>
+                                    <td scope="row">{{ str_replace('_', ' ', ucfirst($key)) }}</td>
+                                    <td scope="row">{{ $value }}</td>
                                 </tr>
                             @endif
                         @endforeach
                     @endif
                 </tbody>
             </table>
+            @if (!$user->is_activated)
+                <button href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activate-modal">
+                    <i class="fas fa-check"></i> Activate account
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="activate-modal" tabindex="-1" aria-labelledby="activateModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="activateModalLabel">Activate account</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure to activate this account?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-bs-dismiss="modal">No</button>
+                                <a href="{{ route('activate.seller', ['user' => $user->id]) }}" class="btn btn-success">Yes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
 
 @push('scripts')
-    
+
 @endpush
