@@ -25,7 +25,7 @@ Route::middleware('api')->group(function () {
     });
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('jwt.verify:api')->group(function () {
     Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
