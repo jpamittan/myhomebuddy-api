@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\{
     ActivateController,
+    DebugController,
     DashboardController,
     LoginController,
     TermsController
@@ -46,5 +47,14 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('terms')->group(function () {
         Route::get('/', [TermsController::class, 'index'])->name('terms.index');
         Route::post('/update/{term}', [TermsController::class, 'update'])->name('terms.update');
+    });
+    Route::prefix('debug')->group(function () {
+        Route::get('/', [DebugController::class, 'index'])->name('debug.index');
+        Route::prefix('users')->group(function () {
+            Route::prefix('clear')->group(function () {
+                Route::get('/consumers', [DebugController::class, 'clearConsumers'])->name('debug.clearConsumers');
+                Route::get('/sellers', [DebugController::class, 'clearSellers'])->name('debug.clearSellers');
+            });
+        });
     });
 });

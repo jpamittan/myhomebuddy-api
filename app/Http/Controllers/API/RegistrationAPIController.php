@@ -14,7 +14,7 @@ class RegistrationAPIController extends Controller
     public function consumer(Request $request): ?object
     {
         try {
-            $consumer = User::Where('email', '=', $request->input('email'))
+            $consumer = User::where('email', '=', $request->input('email'))
                 ->count();
             if ($consumer) {
                 return response()->json(['error' => "Email address already registered."], 409);

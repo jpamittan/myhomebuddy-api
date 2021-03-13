@@ -33,6 +33,11 @@
                         <i class="fas fa-file-alt"></i> Terms
                       </a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href=" {{ route('debug.index') }}">
+                        <i class="fas fa-code"></i> Debug
+                      </a>
+                    </li>
                   @endif
                   <li class="nav-item">
                     <a class="nav-link" href=" {{ route('logout') }}">
