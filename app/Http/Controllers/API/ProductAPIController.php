@@ -12,14 +12,20 @@ class ProductAPIController extends Controller
     public function get(): ?object
     {
         try {
-            $products = Product::where('status', 1)
+            $products = Product::with('seller')
+                ->where('status', 1)
                 ->orderBy('created_at', 'DESC')
-                ->paginate(20);
+                // ->paginate(20);
+                ->get();
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
 
-        return $products;
+        return response()->json([
+                'data' => $products
+            ], 
+            200
+        );
     }
 
     public function fetch(): ?object
@@ -29,12 +35,17 @@ class ProductAPIController extends Controller
             $products = Product::where('status', 1)
                 ->where('user_id', $token->getPayload()->get('sub'))
                 ->orderBy('created_at', 'DESC')
-                ->paginate(20);
+                // ->paginate(20);
+                ->get();
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
 
-        return $products;
+        return response()->json([
+                'data' => $products
+            ], 
+            200
+        );
     }
 
     public function create(Request $request): ?object

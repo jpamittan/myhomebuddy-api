@@ -14,4 +14,9 @@ class Product extends Model
         SoftDeletes;
 
     protected $guarded = [];
+
+    public function seller()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }
