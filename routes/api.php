@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\API\{
     AuthController,
+    ProductAPIController,
     RegistrationAPIController,
 };
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,18 @@ Route::middleware('api')->group(function () {
 Route::middleware('jwt.verify:api')->group(function () {
     Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::prefix('consumer')->group(function () {
+        Route::prefix('product')->group(function () {
+            Route::get('/', [ProductAPIController::class, 'get'])->name('product.get');
+        });
+    });
+    Route::prefix('seller')->group(function () {
+        Route::prefix('product')->group(function () {
+            Route::get('/', [ProductAPIController::class, 'fetch'])->name('product.fetch');
+            Route::post('/', [ProductAPIController::class, 'create'])->name('product.create');
+            Route::get('/{product}', [ProductAPIController::class, 'query'])->name('product.query');
+            Route::put('/{product}', [ProductAPIController::class, 'update'])->name('product.update');
+            Route::delete('/{product}', [ProductAPIController::class, 'delete'])->name('product.delete');
+        });
+    });
 });
