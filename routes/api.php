@@ -49,7 +49,6 @@ Route::middleware('jwt.verify:api')->group(function () {
         Route::prefix('account')->group(function () {
             Route::get('/', [BillingAccountAPIController::class, 'get'])->name('billingaccount.get');
             Route::post('/', [BillingAccountAPIController::class, 'create'])->name('billingaccount.create');
-            Route::put('/{billingAccount}', [BillingAccountAPIController::class, 'update'])->name('billingaccount.update');
         });
     });
 });
