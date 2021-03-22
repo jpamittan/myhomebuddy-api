@@ -12,8 +12,7 @@ class ProductAPIController extends Controller
     public function get(): ?object
     {
         try {
-            $products = Product::with('seller')
-                ->where('status', 1)
+            $products = Product::where('status', 1)
                 ->orderBy('created_at', 'DESC')
                 // ->paginate(20);
                 ->get();
@@ -67,8 +66,22 @@ class ProductAPIController extends Controller
         );
     }
 
-    public function query(Product $product): ?object
+    public function consumerQuery(Product $product): ?object
     {
+        $product->load('seller');
+        $product->load('reviews');
+
+        return response()->json([
+                'data' => $product
+            ], 
+            200
+        );
+    }
+
+    public function sellerQuery(Product $product): ?object
+    {
+        $product->load('reviews');
+
         return response()->json([
                 'data' => $product
             ], 

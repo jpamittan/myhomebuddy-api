@@ -32,13 +32,14 @@ Route::middleware('jwt.verify:api')->group(function () {
     Route::prefix('consumer')->group(function () {
         Route::prefix('product')->group(function () {
             Route::get('/', [ProductAPIController::class, 'get'])->name('product.get');
+            Route::get('/{product}', [ProductAPIController::class, 'consumerQuery'])->name('product.consumerQuery');
         });
     });
     Route::prefix('seller')->group(function () {
         Route::prefix('product')->group(function () {
             Route::get('/', [ProductAPIController::class, 'fetch'])->name('product.fetch');
             Route::post('/', [ProductAPIController::class, 'create'])->name('product.create');
-            Route::get('/{product}', [ProductAPIController::class, 'query'])->name('product.query');
+            Route::get('/{product}', [ProductAPIController::class, 'sellerQuery'])->name('product.sellerQuery');
             Route::put('/{product}', [ProductAPIController::class, 'update'])->name('product.update');
             Route::delete('/{product}', [ProductAPIController::class, 'delete'])->name('product.delete');
         });
