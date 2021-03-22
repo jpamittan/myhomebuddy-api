@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\API\{
     AuthController,
+    BillingAccountAPIController,
     ProductAPIController,
     RegistrationAPIController,
 };
@@ -42,6 +43,13 @@ Route::middleware('jwt.verify:api')->group(function () {
             Route::get('/{product}', [ProductAPIController::class, 'sellerQuery'])->name('product.sellerQuery');
             Route::put('/{product}', [ProductAPIController::class, 'update'])->name('product.update');
             Route::delete('/{product}', [ProductAPIController::class, 'delete'])->name('product.delete');
+        });
+    });
+    Route::prefix('billing')->group(function () {
+        Route::prefix('account')->group(function () {
+            Route::get('/', [BillingAccountAPIController::class, 'get'])->name('billingaccount.get');
+            Route::post('/', [BillingAccountAPIController::class, 'create'])->name('billingaccount.create');
+            Route::put('/{billingAccount}', [BillingAccountAPIController::class, 'update'])->name('billingaccount.update');
         });
     });
 });
