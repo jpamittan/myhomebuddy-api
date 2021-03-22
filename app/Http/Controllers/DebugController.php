@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Models\User;
+use App\Models\{
+    Product,
+    ProductReview,
+    User
+};
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\{
     RedirectResponse,
@@ -31,5 +35,13 @@ class DebugController extends Controller
             ->delete();
 
         return redirect('/debug?clear=sellers');
+    }
+
+    public function clearProducts(): RedirectResponse
+    {
+        Product::truncate();
+        ProductReview::truncate();
+
+        return redirect('/debug?clear=products');
     }
 }

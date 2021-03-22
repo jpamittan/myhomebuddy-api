@@ -56,5 +56,10 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/sellers', [DebugController::class, 'clearSellers'])->name('debug.clearSellers');
             });
         });
+        Route::prefix('products')->group(function () {
+            Route::prefix('clear')->group(function () {
+                Route::get('/', [DebugController::class, 'clearProducts'])->name('debug.clearProducts');
+            });
+        });
     });
 });

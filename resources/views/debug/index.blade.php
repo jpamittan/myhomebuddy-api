@@ -16,6 +16,16 @@
         <div class="mt-3">
             <ul>
                 <li>
+                    <i class="fas fa-list"></i> Products
+                     <ul>
+                        <li>
+                            <a href="{{ route('debug.clearProducts') }}" class="btn btn-warning d-inline-block mt-2">
+                                <i class="fas fa-trash"></i> Clear Products
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
                     <i class="fas fa-users"></i> Users
                      <ul>
                         <li>

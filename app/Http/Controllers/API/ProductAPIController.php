@@ -69,7 +69,7 @@ class ProductAPIController extends Controller
     public function consumerQuery(Product $product): ?object
     {
         $product->load('seller');
-        $product->load('reviews');
+        $product->load('reviews.user');
 
         return response()->json([
                 'data' => $product
@@ -80,7 +80,7 @@ class ProductAPIController extends Controller
 
     public function sellerQuery(Product $product): ?object
     {
-        $product->load('reviews');
+        $product->load('reviews.user');
 
         return response()->json([
                 'data' => $product
@@ -101,7 +101,7 @@ class ProductAPIController extends Controller
         return response()->json([
                 'data' => $product
             ], 
-            201
+            200
         );
     }
 
