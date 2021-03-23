@@ -17,7 +17,10 @@ class ReviewProductAPIController extends Controller
         try {
             $token = JWTAuth::parseToken();
             $productReview = ProductReview::updateOrCreate(
-                ['user_id' => $token->getPayload()->get('sub')],
+                [
+                    'user_id' => $token->getPayload()->get('sub'),
+                    'product_id' => $request->input('product_id')
+                ],
                 [
                     'product_id' => $request->input('product_id'),
                     'ratings' => $request->input('ratings'),
