@@ -16,6 +16,7 @@ use App\Http\Controllers\API\{
     BillingAccountAPIController,
     ProductAPIController,
     RegistrationAPIController,
+    ReviewProductAPIController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,9 @@ Route::middleware('jwt.verify:api')->group(function () {
         Route::prefix('product')->group(function () {
             Route::get('/', [ProductAPIController::class, 'get'])->name('product.get');
             Route::get('/{product}', [ProductAPIController::class, 'consumerQuery'])->name('product.consumerQuery');
+            Route::prefix('review')->group(function () {
+                Route::post('/', [ReviewProductAPIController::class, 'create'])->name('reviewproduct.create');
+            });
         });
     });
     Route::prefix('seller')->group(function () {
