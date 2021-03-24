@@ -19,6 +19,12 @@ class Product extends Model
 
     protected $guarded = [];
 
+    public function orders(): ?HasMany
+    {
+        
+        return $this->hasMany(Order::class, 'id', 'product_id');
+    }
+
     public function seller(): ?HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
