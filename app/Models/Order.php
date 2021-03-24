@@ -33,4 +33,9 @@ class Order extends Model
     {
         return $this->hasOne(Product::class, 'id', 'product_id');
     }
+
+    public function setDeliveryDaysAttribute($value)
+    {
+        $this->attributes['delivery_days'] = json_encode($value);
+    }
 }

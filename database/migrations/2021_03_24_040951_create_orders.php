@@ -22,6 +22,7 @@ class CreateOrders extends Migration
             $table->date('subscription_to');
             $table->string('frequency');
             $table->text('delivery_days');
+            $table->integer('total_quantity');
             $table->decimal('total_amount', 8, 2);
             $table->timestamps();
             $table->softDeletes();

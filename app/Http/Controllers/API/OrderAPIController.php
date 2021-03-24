@@ -16,31 +16,20 @@ class OrderAPIController extends Controller
     {
         try {
             $token = JWTAuth::parseToken();
-            $orders = Order::with('product.seller')
-                ->where('user_id', $token->getPayload()->get('sub'))
-                ->orderBy('created_at', 'DESC')
-                ->get();
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-
-        return response()->json([
-                'data' => $orders
-            ], 
-            200
-        );
-    }
-
-    public function fetch(): ?object
-    {
-        try {
-            $token = JWTAuth::parseToken();
-            $orders = User::where('id', $token->getPayload()->get('sub'))
-                ->with('products.orders')
-                ->select([
-                    'id'
-                ])
-                ->first();
+            $user = User::find($token->getPayload()->get('sub'));
+            if ($user->type == "Consumer") {
+                $orders = Order::with('product.seller')
+                    ->where('user_id', $token->getPayload()->get('sub'))
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
+            } else {
+                $orders = User::where('id', $token->getPayload()->get('sub'))
+                    ->with('productOrders.orders')
+                    ->select([
+                        'id'
+                    ])
+                    ->first();
+            }
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -61,7 +50,7 @@ class OrderAPIController extends Controller
         }
 
         return response()->json([
-                'data' => $orders
+                'data' => $order
             ], 
             200
         );

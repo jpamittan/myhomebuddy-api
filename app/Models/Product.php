@@ -22,7 +22,7 @@ class Product extends Model
     public function orders(): ?HasMany
     {
         
-        return $this->hasMany(Order::class, 'id', 'product_id');
+        return $this->hasMany(Order::class, 'product_id', 'id');
     }
 
     public function seller(): ?HasOne

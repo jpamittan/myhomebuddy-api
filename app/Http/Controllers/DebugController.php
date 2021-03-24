@@ -25,6 +25,7 @@ class DebugController extends Controller
     {
         User::where('type', 'Consumer')
             ->delete();
+        Order::truncate();
 
         return redirect('/debug?clear=consumers');
     }
@@ -33,6 +34,7 @@ class DebugController extends Controller
     {
         User::where('type', 'Seller')
             ->delete();
+        BillingAccount::truncate();
 
         return redirect('/debug?clear=sellers');
     }
