@@ -46,6 +46,7 @@ class OrderAPIController extends Controller
     {
         try {
             $order->load('product.seller');
+            $order->load('orderSchedules');
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

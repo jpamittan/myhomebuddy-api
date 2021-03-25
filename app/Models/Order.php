@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\{
+    HasMany,
+    HasOne
+};
 use Illuminate\Database\Eloquent\{
     Model,
     SoftDeletes
@@ -32,6 +35,11 @@ class Order extends Model
     public function product(): ?HasOne
     {
         return $this->hasOne(Product::class, 'id', 'product_id');
+    }
+
+    public function orderSchedules(): ?HasMany
+    {
+        return $this->hasMany(OrderSchedule::class, 'order_id', 'id');
     }
 
     public function setDeliveryDaysAttribute($value)
