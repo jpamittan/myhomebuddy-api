@@ -24,6 +24,8 @@ class CreateOrders extends Migration
             $table->text('delivery_days');
             $table->integer('total_quantity');
             $table->decimal('total_amount', 8, 2);
+            $table->string('payment_method');
+            $table->text('payment_properties')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

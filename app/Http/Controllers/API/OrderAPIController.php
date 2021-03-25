@@ -6,6 +6,7 @@ use JWTAuth;
 use App\Http\Controllers\Controller;
 use App\Models\{
     Order,
+    OrderSchedule,
     User
 };
 use Illuminate\Http\Request;
@@ -62,8 +63,19 @@ class OrderAPIController extends Controller
             $token = JWTAuth::parseToken();
             $order = new Order;
             $order->user_id = $token->getPayload()->get('sub');
-            $order->fill($request->all());
+            $order->fill($request->except('order_schedules'));
             $order->save();
+
+            $orderSchedules = json_decode(json_encode($request->input('order_schedules')), true);
+            foreach ($orderSchedules as $schedule) {
+                $orderSchedule = new OrderSchedule;
+                $orderSchedule->order_id = $order->id;
+                $orderSchedule->schedule_date = $schedule['schedule_date'];
+                $orderSchedule->schedule_time = $schedule['schedule_time'];
+                $orderSchedule->qty = $schedule['qty'];
+                $orderSchedule->total_amount = $schedule['total_amount'];
+                $orderSchedule->save();
+            }
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

@@ -38,4 +38,9 @@ class Order extends Model
     {
         $this->attributes['delivery_days'] = json_encode($value);
     }
+
+    public function setPaymentPropertiesAttribute($value)
+    {
+        $this->attributes['payment_properties'] = json_encode($value);
+    }
 }
