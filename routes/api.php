@@ -15,6 +15,7 @@ use App\Http\Controllers\API\{
     AuthController,
     BillingAccountAPIController,
     OrderAPIController,
+    OrderScheduleAPIController,
     ProductAPIController,
     RegistrationAPIController,
     ReviewProductAPIController
@@ -62,5 +63,8 @@ Route::middleware('jwt.verify:api')->group(function () {
         Route::post('/', [OrderAPIController::class, 'create'])->name('order.create');
         Route::put('/{order}', [OrderAPIController::class, 'update'])->name('order.update');
         Route::delete('/{order}', [OrderAPIController::class, 'delete'])->name('order.delete');
+        Route::prefix('schedule')->group(function () {
+            Route::post('/{orderSchedule}', [OrderScheduleAPIController::class, 'update'])->name('orderschedule.update');
+        });
     });
 });
