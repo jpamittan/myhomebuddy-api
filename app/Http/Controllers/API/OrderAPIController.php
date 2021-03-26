@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\{
     Order,
     OrderSchedule,
+    Product,
     User
 };
 use Illuminate\Http\Request;
@@ -63,21 +64,27 @@ class OrderAPIController extends Controller
     public function create(Request $request): ?object
     {
         try {
-            $token = JWTAuth::parseToken();
-            $order = new Order;
-            $order->user_id = $token->getPayload()->get('sub');
-            $order->fill($request->except('order_schedules'));
-            $order->save();
-
-            $orderSchedules = json_decode(json_encode($request->input('order_schedules')), true);
-            foreach ($orderSchedules as $schedule) {
-                $orderSchedule = new OrderSchedule;
-                $orderSchedule->order_id = $order->id;
-                $orderSchedule->schedule_date = $schedule['schedule_date'];
-                $orderSchedule->schedule_time = $schedule['schedule_time'];
-                $orderSchedule->qty = $schedule['qty'];
-                $orderSchedule->total_amount = $schedule['total_amount'];
-                $orderSchedule->save();
+            $product = Product::find($request->input('product_id'));
+            if ($product->quantity >= $request->input('total_quantity')) {
+                $token = JWTAuth::parseToken();
+                $order = new Order;
+                $order->user_id = $token->getPayload()->get('sub');
+                $order->fill($request->except('order_schedules'));
+                $order->save();
+                $orderSchedules = json_decode(json_encode($request->input('order_schedules')), true);
+                foreach ($orderSchedules as $schedule) {
+                    $orderSchedule = new OrderSchedule;
+                    $orderSchedule->order_id = $order->id;
+                    $orderSchedule->schedule_date = $schedule['schedule_date'];
+                    $orderSchedule->schedule_time = $schedule['schedule_time'];
+                    $orderSchedule->qty = $schedule['qty'];
+                    $orderSchedule->total_amount = $schedule['total_amount'];
+                    $orderSchedule->save();
+                }
+                $product->quantity = $product->quantity - intval($request->input('total_quantity'));
+                $product->save();
+            } else {
+                return response()->json(['error' => "Too many orders."], 422);
             }
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
