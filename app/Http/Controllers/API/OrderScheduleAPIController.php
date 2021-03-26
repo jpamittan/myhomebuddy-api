@@ -18,7 +18,7 @@ class OrderScheduleAPIController extends Controller
         try {
             if ($request->input('status') == "cancelled") {
                 $order = Order::find($orderSchedule->order_id);
-                $product = Product::find($order->$order);
+                $product = Product::find($order->product_id);
                 $product->quantity = $product->quantity + $orderSchedule->qty;
                 $product->save();
             }
