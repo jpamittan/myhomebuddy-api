@@ -18,7 +18,8 @@ use App\Http\Controllers\API\{
     OrderScheduleAPIController,
     ProductAPIController,
     RegistrationAPIController,
-    ReviewProductAPIController
+    ReviewProductAPIController,
+    SearchAPIController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -66,5 +67,8 @@ Route::middleware('jwt.verify:api')->group(function () {
         Route::prefix('schedule')->group(function () {
             Route::post('/{orderSchedule}', [OrderScheduleAPIController::class, 'update'])->name('orderschedule.update');
         });
+    });
+    Route::prefix('search')->group(function () {
+        Route::post('/', [SearchAPIController::class, 'query'])->name('search.query');
     });
 });
