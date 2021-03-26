@@ -26,6 +26,7 @@ class DebugController extends Controller
         User::where('type', 'Consumer')
             ->delete();
         Order::truncate();
+        OrderSchedule::truncate();
 
         return redirect('/debug?clear=consumers');
     }
