@@ -22,7 +22,8 @@ class Product extends Model
     public function orders(): ?HasMany
     {
         
-        return $this->hasMany(Order::class, 'product_id', 'id');
+        return $this->hasMany(Order::class, 'product_id', 'id')
+            ->whereHas('orderSchedules');
     }
 
     public function seller(): ?HasOne

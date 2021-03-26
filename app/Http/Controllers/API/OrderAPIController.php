@@ -20,6 +20,7 @@ class OrderAPIController extends Controller
             $user = User::find($token->getPayload()->get('sub'));
             if ($user->type == "Consumer") {
                 $orders = Order::with('product.seller')
+                    ->whereHas('orderSchedules')
                     ->where('user_id', $token->getPayload()->get('sub'))
                     ->orderBy('created_at', 'DESC')
                     ->get();
