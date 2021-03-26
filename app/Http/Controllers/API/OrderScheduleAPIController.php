@@ -4,7 +4,11 @@ namespace App\Http\Controllers\API;
 
 use JWTAuth;
 use App\Http\Controllers\Controller;
-use App\Models\OrderSchedule;
+use App\Models\{
+    Order,
+    OrderSchedule,
+    Product
+};
 use Illuminate\Http\Request;
 
 class OrderScheduleAPIController extends Controller
@@ -12,6 +16,12 @@ class OrderScheduleAPIController extends Controller
     public function update(OrderSchedule $orderSchedule, Request $request): ?object
     {
         try {
+            if ($request->input('status') == "cancelled") {
+                $order = Order::find($orderSchedule->order_id);
+                $product = Product::find($order->$order);
+                $product->quantity = $product->quantity + $orderSchedule->qty;
+                $product->save();
+            }
             $orderSchedule->fill($request->all());
             $orderSchedule->save();
             $orderSchedule->delete();
