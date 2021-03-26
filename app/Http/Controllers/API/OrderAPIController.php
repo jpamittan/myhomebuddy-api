@@ -25,7 +25,7 @@ class OrderAPIController extends Controller
                     ->get();
             } else {
                 $orders = User::where('id', $token->getPayload()->get('sub'))
-                    ->with('productOrders.orders')
+                    ->with('productOrders.orders.consumer')
                     ->select([
                         'id'
                     ])
