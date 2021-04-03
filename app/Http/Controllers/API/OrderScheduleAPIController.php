@@ -24,6 +24,20 @@ class OrderScheduleAPIController extends Controller
             }
             $orderSchedule->fill($request->all());
             $orderSchedule->save();
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+        return response()->json([
+                'data' => $orderSchedule
+            ], 
+            200
+        );
+    }
+
+    public function delete(OrderSchedule $orderSchedule): ?object
+    {
+        try {
             $orderSchedule->delete();
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

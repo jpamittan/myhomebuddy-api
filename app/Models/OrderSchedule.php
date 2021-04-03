@@ -14,4 +14,14 @@ class OrderSchedule extends Model
         SoftDeletes;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'schedule_date'  => 'datetime:n/d/Y',
+        'schedule_time'  => 'datetime:g:i A'
+    ];
+
+    public function getStatusAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }

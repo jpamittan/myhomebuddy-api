@@ -66,6 +66,7 @@ Route::middleware('jwt.verify:api')->group(function () {
         Route::delete('/{order}', [OrderAPIController::class, 'delete'])->name('order.delete');
         Route::prefix('schedule')->group(function () {
             Route::post('/{orderSchedule}', [OrderScheduleAPIController::class, 'update'])->name('orderschedule.update');
+            Route::delete('/{orderSchedule}', [OrderScheduleAPIController::class, 'delete'])->name('orderschedule.delete');
         });
     });
     Route::prefix('search')->group(function () {
