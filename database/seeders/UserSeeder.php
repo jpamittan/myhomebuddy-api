@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'middle_name' => 'Admin',
             'last_name' => 'Admin',
             'email' => 'admin@myhomebuddy.com',
+            'type' => 'Admin',
             'password' => Hash::make('password123')
         ]);
     }
