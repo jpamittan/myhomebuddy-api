@@ -59,6 +59,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
+            "php artisan vendor:publish --provider=\"Tymon\\JWTAuth\\Providers\\LaravelServiceProvider\"",
             "php artisan jwt:secret",
             "php artisan migrate:fresh --seed"
         ]
